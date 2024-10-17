@@ -1,0 +1,56 @@
+.root {
+    -fx-background-color: #636363;
+}
+
+.text {
+    -fx-font-family: Arial;
+    -fx-fill: white;
+}
+
+.menu-bar .text {
+    -fx-fill: #151515;
+}
+
+.table-view .text {
+    -fx-fill: #151515;
+}
+
+.table-view .column-header .text {
+    -fx-fill: white;
+}
+
+.button {
+    -fx-background-color: #8f8f8f;
+}
+
+.text-field {
+    -fx-background-color: #8f8f8f;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #b1b1b1;
+}
+
+.password-field {
+    -fx-background-color: #8f8f8f;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #b1b1b1;
+}
+
+.table-view {
+    -fx-background-color: #777777;
+}
+
+.column-header {
+    -fx-background-color: #8f8f8f;
+}
+
+.separator {
+    -fx-opacity: 0.5;
+}
+
+#logo {
+    -fx-blend-mode: color-dodge;
+}
+
+#logInError {
+    -fx-fill: #ff6565;
+}

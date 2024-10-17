@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxdb_sql_shellcode.GUIController">
+   <children>
+      <BorderPane layoutX="-2.0" layoutY="-1.0" prefHeight="535.0" prefWidth="860.0">
+         <top>
+            <MenuBar minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="837.0" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Settings" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="View">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Other" />
+                        <SeparatorMenuItem mnemonicParsing="false" text="Themes" />
+                        <CheckMenuItem fx:id="themeLight" mnemonicParsing="false" text="Light Theme" />
+                        <CheckMenuItem fx:id="themeDark" mnemonicParsing="false" text="Dark Theme" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+         <right>
+            <TableView fx:id="tv" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#selectedItemTV" prefHeight="477.0" prefWidth="580.0" BorderPane.alignment="CENTER">
+              <columns>
+                <TableColumn fx:id="tv_id" prefWidth="32.0" text="ID" />
+                <TableColumn fx:id="tv_fn" prefWidth="90.0" text="First Name" />
+                  <TableColumn fx:id="tv_ln" prefWidth="90.0" text="Last Name" />
+                  <TableColumn fx:id="tv_email" prefWidth="110.0" text="Email" />
+                  <TableColumn fx:id="tv_phone" prefWidth="110.0" text="Phone" />
+                  <TableColumn fx:id="tv_address" prefWidth="150.0" text="Address" />
+              </columns>
+            </TableView>
+         </right>
+         <left>
+            <VBox prefHeight="264.0" prefWidth="116.0" styleClass="left_pane" BorderPane.alignment="CENTER">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="img_view" fitHeight="103.0" fitWidth="85.0" layoutX="16.0" layoutY="14.0" onMouseClicked="#showImage" pickOnBounds="true" preserveRatio="true" styleClass="profile_pic">
+                           <image>
+                              <Image url="@../../../profile_pictures/default.png" />
+                           </image></ImageView>
+                     </children>
+                  </AnchorPane>
+               </children></VBox>
+         </left>
+         <center>
+            <VBox alignment="TOP_CENTER" prefHeight="476.0" prefWidth="233.0" BorderPane.alignment="CENTER">
+               <children>
+                  <TextField fx:id="first_name" promptText="First Name">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="15.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="last_name" promptText="Last Name">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="email" promptText="Email">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="phone" promptText="Phone">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <TextField fx:id="address" layoutX="20.0" layoutY="106.0" promptText="Address">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <PasswordField fx:id="password" promptText="Password">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" top="5.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <Separator prefHeight="31.0" prefWidth="185.0">
+                     <VBox.margin>
+                        <Insets left="4.0" right="4.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#clearForm" prefWidth="80.0" styleClass="nav_btn" text="Clear">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" />
+                     </VBox.margin></Button>
+                <Button fx:id="addBtn" minWidth="-Infinity" mnemonicParsing="false" onAction="#addNewRecord" prefWidth="80.0" styleClass="nav_btn" text="Add">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </VBox.margin></Button>
+                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#editRecord" prefWidth="80.0" styleClass="nav_btn" text="Edit">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </VBox.margin></Button>
+                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#deleteRecord" prefWidth="80.0" styleClass="nav_btn" text="Delete">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </VBox.margin></Button>
+               </children>
+            </VBox>
+         </center>
+         <bottom>
+            <HBox prefHeight="32.0" prefWidth="693.0" styleClass="bottom_pane" BorderPane.alignment="CENTER" />
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>
