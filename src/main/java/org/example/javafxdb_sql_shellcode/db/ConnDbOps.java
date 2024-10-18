@@ -72,7 +72,7 @@ public class ConnDbOps {
         return hasRegistredUsers;
     }
 
-    public  void queryUserByName(String name) {
+    public void queryUserByName(String name) {
 
 
         try {
@@ -153,7 +153,7 @@ public class ConnDbOps {
     }
 
 
-    public  void deleteUser(int id) {
+    public void deleteUser(int id) {
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
@@ -228,17 +228,44 @@ public class ConnDbOps {
 
             String userPassword = "";
             while (resultSet.next()) {
-                userId=resultSet.getInt("id");
                 userPassword=resultSet.getString("password");
+                if (password.equals(userPassword) && !userPassword.isEmpty()) userId=resultSet.getInt("id");
             }
-            if (password.equals(userPassword) && !userPassword.isEmpty()) return userId;
-
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return userId;
+    }
+
+    public Person getPerson(int id) {
+        Person person=new Person();
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            String sql = "SELECT * FROM users WHERE id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                person.setId(id);
+                String name = resultSet.getString("name");
+                int index = name.indexOf(' ');
+                person.setFirstName(index!=-1?name.substring(0, index):name);
+                person.setLastName(index!=-1?name.substring(index + 1):"");
+                person.setEmail(resultSet.getString("email"));
+                person.setAddress(resultSet.getString("address"));
+                person.setPhone(resultSet.getString("phone"));
+                person.setPhoto(resultSet.getString("photo"));
+            }
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return person;
     }
 
     public ObservableList<Person> dataAsList() {

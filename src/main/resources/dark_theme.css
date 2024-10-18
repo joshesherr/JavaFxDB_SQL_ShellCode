@@ -3,7 +3,6 @@
 }
 
 .text {
-    -fx-font-family: Arial;
     -fx-fill: white;
 }
 
@@ -47,10 +46,18 @@
     -fx-opacity: 0.33;
 }
 
+.circle {
+    -fx-stroke: linear-gradient(from 0.0% 0.0% to 100.0% 100.0%, #8a8a8a 0.0%, #979797 100.0%);
+}
+
 #logo {
     -fx-blend-mode: color-dodge;
 }
 
 #logInError {
     -fx-fill: #ff6565;
+}
+
+#welcomeText {
+    -fx-fill: white;
 }

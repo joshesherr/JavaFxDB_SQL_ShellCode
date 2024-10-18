@@ -9,8 +9,16 @@ public class Person {
     private String address;
     private String phone;
     private String email;
+    private String photo;
 
     public Person() {
+        this.id = -1;
+        this.firstName = "";
+        this.lastName = "";
+        this.address = "";
+        this.phone = "";
+        this.email = "";
+        this.photo = "";
     }
 
     /**
@@ -29,6 +37,7 @@ public class Person {
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.photo = "";
     }
 
 
@@ -84,5 +93,11 @@ public class Person {
         this.email = email;
     }
 
+    public String getPhoto() {
+        return photo==null?"":photo;
+    }
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
 
 }

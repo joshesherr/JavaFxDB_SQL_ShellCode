@@ -10,10 +10,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import org.example.javafxdb_sql_shellcode.db.ConnDbOps;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -21,15 +24,12 @@ public class GUIController implements Initializable {
     private static ConnDbOps cdbop;
     public int currentUserId;
 
-    private final ObservableList<Person> data =
-            FXCollections.observableArrayList(
-                    new Person(1, "Jacob", "Smith", "jacob@email.com", "8002435243", "123 Drive"),
-                    new Person(2, "John", "Kyle", "john@email.com", "6319085943", "23 Ave")
-            );
     @FXML
     public CheckMenuItem themeLight;
     @FXML
     public CheckMenuItem themeDark;
+    public Text welcomeText;
+    public MenuItem logOut;
 
     @FXML
     TextField first_name, last_name, email, phone, address;
@@ -57,6 +57,8 @@ public class GUIController implements Initializable {
         tv_email.setCellValueFactory(new PropertyValueFactory<>("email"));
         tv_phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         tv_address.setCellValueFactory(new PropertyValueFactory<>("address"));
+
+        img_view.setClip(new Circle(45,45,45));
 
         updateGUI();
     }
@@ -97,11 +99,6 @@ public class GUIController implements Initializable {
     }
 
     @FXML
-    protected void logOut() {
-
-    }
-
-    @FXML
     protected void editRecord() {
         Person p= tv.getSelectionModel().getSelectedItem();
         cdbop.editUser(
@@ -110,7 +107,7 @@ public class GUIController implements Initializable {
                 email.getText(),
                 phone.getText(),
                 address.getText(),
-                "",
+                password.getText(),
                 ""
         );
         updateGUI();
@@ -126,13 +123,13 @@ public class GUIController implements Initializable {
 
 
     @FXML
-    protected void editImage() {
+    protected void editImage() throws MalformedURLException {
         File file= (new FileChooser()).showOpenDialog(img_view.getScene().getWindow());
         if(file!=null){
             img_view.setImage(new Image(file.toURI().toString()));
         }
 
-        cdbop.editUser(currentUserId, "","","","","",img_view.getImage().getUrl());
+        cdbop.editUser(currentUserId, "","","","","",file.toURI().toURL().toExternalForm());
     }
 
 
@@ -146,9 +143,5 @@ public class GUIController implements Initializable {
         email.setText(p.getEmail());
         phone.setText(p.getPhone());
         address.setText(p.getAddress());
-
     }
-
-
-
 }

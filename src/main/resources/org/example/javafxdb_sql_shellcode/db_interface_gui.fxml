@@ -12,12 +12,20 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="860.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxdb_sql_shellcode.GUIController">
    <children>
@@ -27,9 +35,9 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Settings" />
+                    <MenuItem mnemonicParsing="false" text="Settings" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#logOut" text="Log out" />
+                        <MenuItem fx:id="logOut" mnemonicParsing="false" text="Log out" />
                         <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Close" />
                   </items>
                 </Menu>
@@ -71,16 +79,41 @@
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="img_view" fitHeight="103.0" fitWidth="85.0" layoutX="16.0" layoutY="14.0" onMouseClicked="#editImage" pickOnBounds="true" preserveRatio="true" styleClass="profile_pic">
+                        <ImageView fx:id="img_view" fitHeight="90.0" fitWidth="90.0" layoutX="16.0" layoutY="58.0" onMouseClicked="#editImage" pickOnBounds="true" preserveRatio="true" style="visibility: 20;" styleClass="profile_pic">
                            <image>
                               <Image url="@../../../profile_pictures/default.png" />
-                           </image></ImageView>
+                           </image>
+                           <effect>
+                              <Blend>
+                                 <topInput>
+                                    <DropShadow />
+                                 </topInput>
+                              </Blend>
+                           </effect></ImageView>
+                        <Circle centerX="45.0" centerY="45.0" fill="#1f93ff00" layoutX="16.0" layoutY="57.0" mouseTransparent="true" radius="45.0" strokeWidth="4.0" styleClass="circle">
+                           <stroke>
+                              <LinearGradient endX="1.0" endY="1.0">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color red="0.6710526347160339" green="0.6710526347160339" blue="0.6710526347160339" />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="0.8157894611358643" green="0.8157894611358643" blue="0.8157894611358643" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </LinearGradient>
+                           </stroke>
+                        </Circle>
                      </children>
                   </AnchorPane>
                </children></VBox>
          </left>
          <center>
-            <VBox alignment="TOP_CENTER" prefHeight="476.0" prefWidth="233.0" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" prefHeight="429.0" prefWidth="164.0" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="first_name" promptText="First Name">
                      <VBox.margin>
@@ -140,5 +173,11 @@
             <HBox prefHeight="32.0" prefWidth="693.0" styleClass="bottom_pane" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
+      <Text fx:id="welcomeText" layoutX="14.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome User!" wrappingWidth="251.13671875">
+         <font>
+            <Font name="Arial Bold" size="18.0" />
+         </font>
+      </Text>
+      <Separator layoutX="14.0" layoutY="57.0" prefHeight="29.0" prefWidth="251.0" />
    </children>
 </AnchorPane>

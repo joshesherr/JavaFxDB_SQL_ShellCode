@@ -6,9 +6,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -21,7 +24,7 @@ public class App extends Application {
 
     private static Scene scene;
     private static ConnDbOps cdbop;
-    private int currentUserId;
+    public Person currentPerson;
 
     private Stage primaryStage;
     private String theme = "light_theme.css";
@@ -90,13 +93,13 @@ public class App extends Application {
             scene.getStylesheets().add(theme);
             primaryStage.setScene(scene);
             primaryStage.show();
-            showLogIn();
+            showLogIn(3);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void showLogIn() {
+    private void showLogIn(double fadeInTime) {
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("log_in.fxml"));
@@ -105,7 +108,7 @@ public class App extends Application {
 
             logInController.logInBtn.setOnAction(e->{
                 if(logInController.logInQuery()) {
-                    currentUserId= logInController.currentUserId;
+                    currentPerson=cdbop.getPerson(logInController.currentUserId);
                     showInterface();
                 }
             });
@@ -131,7 +134,7 @@ public class App extends Application {
 
             Scene currentScene = primaryStage.getScene();
             Parent currentRoot = currentScene.getRoot();
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), currentRoot);
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(fadeInTime), currentRoot);
             fadeOut.setFromValue(1);
             fadeOut.setToValue(0);
             fadeOut.setInterpolator(Interpolator.EASE_IN);
@@ -152,8 +155,11 @@ public class App extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("db_interface_gui.fxml"));
             Parent newRoot = fxmlLoader.load();
             GUIController guiController = fxmlLoader.getController();
-
-            guiController.currentUserId = currentUserId;
+            guiController.currentUserId = currentPerson.getId();
+            if(!currentPerson.getPhoto().isEmpty()) guiController.img_view.setImage(new Image(currentPerson.getPhoto()));
+            guiController.welcomeText.setText("Welcome " + (currentPerson.getFirstName().isEmpty()
+                    ?"User"
+                    :currentPerson.getFirstName()) + "!");
             //Update themes
             if (theme.equals("light_theme.css")) {
                 guiController.themeLight.setSelected(true);
@@ -175,6 +181,9 @@ public class App extends Application {
                 primaryStage.getScene().getStylesheets().add(theme);
                 guiController.themeLight.setSelected(false);
                 settingsSave("theme","light");
+            });
+            guiController.logOut.setOnAction(e->{
+                showLogIn(0);
             });
 
             Scene currentScene = primaryStage.getScene();
