@@ -21,6 +21,8 @@ public class LogInController {
     private static final ConnDbOps cdbop = new ConnDbOps();;
     public Button themeToggle;
 
+    public int currentUserId;
+
     /**
      * Test login info with the database.
      * @return True or False if log in was successful.
@@ -35,7 +37,8 @@ public class LogInController {
         if(logInEmail.getText().equals("admin") && logInPassword.getText().equals("1234")) {
             return true;
         }
-        else if(cdbop.userLogIn(email, pass)){
+        currentUserId = cdbop.userLogIn(email, pass);
+        if(currentUserId!=-1){
             logInError.setVisible(false);
             return true;
         }

@@ -29,6 +29,7 @@
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Settings" />
                         <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#logOut" text="Log out" />
                         <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Close" />
                   </items>
                 </Menu>
@@ -70,7 +71,7 @@
                <children>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <ImageView fx:id="img_view" fitHeight="103.0" fitWidth="85.0" layoutX="16.0" layoutY="14.0" onMouseClicked="#showImage" pickOnBounds="true" preserveRatio="true" styleClass="profile_pic">
+                        <ImageView fx:id="img_view" fitHeight="103.0" fitWidth="85.0" layoutX="16.0" layoutY="14.0" onMouseClicked="#editImage" pickOnBounds="true" preserveRatio="true" styleClass="profile_pic">
                            <image>
                               <Image url="@../../../profile_pictures/default.png" />
                            </image></ImageView>

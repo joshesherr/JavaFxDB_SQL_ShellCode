@@ -216,25 +216,29 @@ public class ConnDbOps {
         }
     }
 
-    public boolean userLogIn(String email, String password) {
+    public int userLogIn(String email, String password) {
+        int userId=-1;
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "SELECT password FROM users WHERE email = ?";
+            String sql = "SELECT id, password FROM users WHERE email = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, email);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             String userPassword = "";
-            while (resultSet.next()) {userPassword=resultSet.getString("password");}
-            if (password.equals(userPassword) && !userPassword.isEmpty()) return true;
+            while (resultSet.next()) {
+                userId=resultSet.getInt("id");
+                userPassword=resultSet.getString("password");
+            }
+            if (password.equals(userPassword) && !userPassword.isEmpty()) return userId;
 
             preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
+        return userId;
     }
 
     public ObservableList<Person> dataAsList() {

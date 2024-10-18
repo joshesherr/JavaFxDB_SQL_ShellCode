@@ -21,6 +21,7 @@ public class App extends Application {
 
     private static Scene scene;
     private static ConnDbOps cdbop;
+    private int currentUserId;
 
     private Stage primaryStage;
     private String theme = "light_theme.css";
@@ -103,7 +104,10 @@ public class App extends Application {
             LogInController logInController = fxmlLoader.getController();
 
             logInController.logInBtn.setOnAction(e->{
-                if(logInController.logInQuery()) showInterface();
+                if(logInController.logInQuery()) {
+                    currentUserId= logInController.currentUserId;
+                    showInterface();
+                }
             });
             if (theme.equals("light_theme.css")) {
                 logInController.themeToggle.setText("\uD83C\uDF19");
@@ -149,6 +153,7 @@ public class App extends Application {
             Parent newRoot = fxmlLoader.load();
             GUIController guiController = fxmlLoader.getController();
 
+            guiController.currentUserId = currentUserId;
             //Update themes
             if (theme.equals("light_theme.css")) {
                 guiController.themeLight.setSelected(true);

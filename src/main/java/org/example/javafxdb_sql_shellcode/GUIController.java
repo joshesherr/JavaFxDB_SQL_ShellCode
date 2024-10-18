@@ -19,6 +19,7 @@ import java.util.ResourceBundle;
 
 public class GUIController implements Initializable {
     private static ConnDbOps cdbop;
+    public int currentUserId;
 
     private final ObservableList<Person> data =
             FXCollections.observableArrayList(
@@ -47,6 +48,9 @@ public class GUIController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        cdbop = new ConnDbOps();
+        cdbop.connectToDatabase();
+
         tv_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         tv_fn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tv_ln.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -59,8 +63,6 @@ public class GUIController implements Initializable {
 
 
     private void updateGUI() {
-        cdbop = new ConnDbOps();
-        cdbop.connectToDatabase();
         tv.setItems(cdbop.dataAsList());
     }
 
@@ -75,7 +77,7 @@ public class GUIController implements Initializable {
             phone.getText(),
             address.getText()
         );
-        cdbop.insertUser(person,password.getText(),img_view.getImage().getUrl());
+        cdbop.insertUser(person,password.getText());
         updateGUI();
     }
 
@@ -94,6 +96,10 @@ public class GUIController implements Initializable {
         System.exit(0);
     }
 
+    @FXML
+    protected void logOut() {
+
+    }
 
     @FXML
     protected void editRecord() {
@@ -104,8 +110,8 @@ public class GUIController implements Initializable {
                 email.getText(),
                 phone.getText(),
                 address.getText(),
-                password.getText(),
-                img_view.getImage().getUrl()
+                "",
+                ""
         );
         updateGUI();
     }
@@ -120,11 +126,13 @@ public class GUIController implements Initializable {
 
 
     @FXML
-    protected void showImage() {
+    protected void editImage() {
         File file= (new FileChooser()).showOpenDialog(img_view.getScene().getWindow());
         if(file!=null){
             img_view.setImage(new Image(file.toURI().toString()));
         }
+
+        cdbop.editUser(currentUserId, "","","","","",img_view.getImage().getUrl());
     }
 
 
@@ -140,4 +148,7 @@ public class GUIController implements Initializable {
         address.setText(p.getAddress());
 
     }
+
+
+
 }
