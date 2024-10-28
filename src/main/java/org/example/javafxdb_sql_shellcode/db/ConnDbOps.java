@@ -8,12 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.javafxdb_sql_shellcode.Person;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  *
@@ -47,7 +42,8 @@ public class ConnDbOps {
                     + "phone VARCHAR(200),"
                     + "address VARCHAR(200),"
                     + "password VARCHAR(200) NOT NULL,"
-                    + "photo VARCHAR(255)"
+                    + "photo VARCHAR(255),"
+                    + "DoB DATE"
                     + ")";
             statement.executeUpdate(sql);
 
@@ -113,7 +109,8 @@ public class ConnDbOps {
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
-                System.out.println("ID: " + id + ", Name: " + name + ", Email: " + email + ", Phone: " + phone + ", Address: " + address);
+                String DoB = resultSet.getString("DoB");
+                System.out.println("ID: " + id + ", Name: " + name + ", Email: " + email + ", Phone: " + phone + ", Address: " + address + "Date of Birth: " + DoB);
             }
 
             preparedStatement.close();
@@ -130,7 +127,7 @@ public class ConnDbOps {
 
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "INSERT INTO users (name, email, phone, address, password, photo) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users (name, email, phone, address, password, photo, DoB) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, user.getFirstName()+" "+user.getLastName());
             preparedStatement.setString(2, user.getEmail());
@@ -138,6 +135,18 @@ public class ConnDbOps {
             preparedStatement.setString(4, user.getAddress());
             preparedStatement.setString(5, password);
             preparedStatement.setString(6, photo);
+
+            //Format the DoB String into a SQL Date datatype.
+            String dob = user.getDoB();;
+            int index = dob.indexOf('-');
+            String month = index != -1 ? dob.substring(0, index) : "";
+            dob = index != -1 ? dob.substring(index + 1): "";
+            index = dob.indexOf('-');
+            String day = index != -1 ? dob.substring(0, index) : "";
+            String year = index != -1 ? dob.substring(index + 1): "";
+
+            preparedStatement.setDate(7, new Date(Integer.parseInt(month), Integer.parseInt(day), Integer.parseInt(year)));
+
 
             int row = preparedStatement.executeUpdate();
 
@@ -286,7 +295,8 @@ public class ConnDbOps {
                 String email = resultSet.getString("email");
                 String phone = resultSet.getString("phone");
                 String address = resultSet.getString("address");
-                list.add(new Person(id, fname, lname, email, phone, address));
+                String DoB = resultSet.getString("DoB");
+                list.add(new Person(id, fname, lname, email, phone, address, DoB));
             }
 
             preparedStatement.close();

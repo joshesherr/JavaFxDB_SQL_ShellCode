@@ -15,10 +15,12 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import org.example.javafxdb_sql_shellcode.db.ConnDbOps;
 
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.*;
 
 public class GUIController implements Initializable {
     private static ConnDbOps cdbop;
@@ -28,11 +30,12 @@ public class GUIController implements Initializable {
     public CheckMenuItem themeLight;
     @FXML
     public CheckMenuItem themeDark;
-    public Text welcomeText;
+    public Text welcomeText, formatCheck;
     public MenuItem logOut;
+    public Button addBtn;
 
     @FXML
-    TextField first_name, last_name, email, phone, address;
+    TextField first_name, last_name, email, phone, address, DoB;
     @FXML
     PasswordField password;
     @FXML
@@ -77,7 +80,8 @@ public class GUIController implements Initializable {
             last_name.getText(),
             email.getText(),
             phone.getText(),
-            address.getText()
+            address.getText(),
+            DoB.getText()
         );
         cdbop.insertUser(person,password.getText());
         updateGUI();
@@ -91,6 +95,49 @@ public class GUIController implements Initializable {
         phone.setText("");
         address.setText("");
         password.setText("");
+    }
+
+    protected boolean isValidForm() {
+
+        final String nameFormat = "\\b[a-zA-Z]{2,25}";
+        final String emailFormat = "[a-zA-Z0-9]+@farmingdale.edu";
+        final String phoneFormat = "[0-9]{10}";
+        final String dateFormat = "[01]\\d-[1-3]\\d-\\d{4}";
+        final String zipCodeFormat = "[0-9]{5}";
+
+        formatCheck.setVisible(true);
+        if (!first_name.getText().matches(nameFormat)){
+            formatCheck.setText("First Name field is incorrect.");
+            return false;
+        }
+        if (!last_name.getText().matches(nameFormat)){
+            formatCheck.setText("Last Name field is incorrect.");
+            return false;
+        }
+        if (!email.getText().matches(emailFormat)){
+            formatCheck.setText("Email field is incorrect.");
+            return false;
+        }
+        if (!phone.getText().matches(phoneFormat)){
+            formatCheck.setText("Phone Number field is incorrect.");
+            return false;
+        }
+        if (!address.getText().matches(zipCodeFormat)){
+            formatCheck.setText("Zip Code field is incorrect.");
+            return false;
+        }
+        if (!DoB.getText().matches(dateFormat)){
+            formatCheck.setText("Date of Birth field is incorrect.");
+            return false;
+        }
+        formatCheck.setVisible(false);
+        addBtn.requestFocus();
+        return true;
+    }
+
+    @FXML
+    protected void formUpdated() {
+        addBtn.setDisable(!isValidForm());
     }
 
     @FXML
@@ -120,8 +167,6 @@ public class GUIController implements Initializable {
         updateGUI();
     }
 
-
-
     @FXML
     protected void editImage() throws MalformedURLException {
         File file= (new FileChooser()).showOpenDialog(img_view.getScene().getWindow());
@@ -131,8 +176,6 @@ public class GUIController implements Initializable {
 
         cdbop.editUser(currentUserId, "","","","","",file.toURI().toURL().toExternalForm());
     }
-
-
 
     @FXML
     protected void selectedItemTV(MouseEvent mouseEvent) {

@@ -256,9 +256,11 @@ public class App extends Application {
                     String phone = scan.nextLine();
                     System.out.print("Enter Address: ");
                     String address = scan.nextLine();
+                    System.out.print("Enter Date of Birth: ");
+                    String DoB = scan.nextLine();
                     System.out.print("Enter Password: ");
                     String password = scan.nextLine();
-                    Person user = new Person(0,fname,lname,email,phone,address);
+                    Person user = new Person(0,fname,lname,email,phone,address,DoB);
                     cdbop.insertUser(user, password); //Your insertUser method
                     break;
                 case 'd':// Delete User

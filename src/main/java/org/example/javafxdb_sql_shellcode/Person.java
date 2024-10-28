@@ -10,6 +10,7 @@ public class Person {
     private String phone;
     private String email;
     private String photo;
+    private String DoB;
 
     public Person() {
         this.id = -1;
@@ -19,6 +20,7 @@ public class Person {
         this.phone = "";
         this.email = "";
         this.photo = "";
+        this.DoB = "";
     }
 
     /**
@@ -30,7 +32,7 @@ public class Person {
      * @param phone
      * @param address
      */
-    public Person(Integer id, String firstName, String lastName, String email, String phone, String address) {
+    public Person(Integer id, String firstName, String lastName, String email, String phone, String address, String DoB) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,13 +40,13 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.photo = "";
+        this.DoB = DoB;
     }
 
 
     public Integer getId() {
         return id;
     }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -53,7 +55,6 @@ public class Person {
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -62,15 +63,14 @@ public class Person {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+
     public String getPhone() {
         return phone;
     }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }
@@ -79,7 +79,6 @@ public class Person {
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
@@ -88,10 +87,10 @@ public class Person {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     public String getPhoto() {
         return photo==null?"":photo;
@@ -99,5 +98,10 @@ public class Person {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
+
+    public String getDoB() {
+        return DoB==null?"":DoB;
+    }
+    public void setDoB(String doB) {this.DoB = doB;}
 
 }
